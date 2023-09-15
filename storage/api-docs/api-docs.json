@@ -1,37 +1,56 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Swagger with Laravel",
+        "title": "Support API",
         "version": "1.0.0"
     },
     "paths": {
         "/api/auth": {
             "post": {
+                "tags": [
+                    "Auth"
+                ],
                 "summary": "Генерация токена для аутентификации для пользователя",
                 "operationId": "b951b922133e8648f2e1ce3b9b2d6540",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "Почта пользователя",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "Пароль пользователя",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "email": {
+                                                "type": "string",
+                                                "example": "support@test.com"
+                                            },
+                                            "password": {
+                                                "type": "string",
+                                                "example": "support"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
-                        "description": "Успешная аутентификация"
+                        "description": "Успешная аутентификация",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "some token"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "403": {
                         "description": "Доступ запрещен"
@@ -39,47 +58,193 @@
                 }
             }
         },
-        "/api/register": {
-            "post": {
-                "summary": "Register a new user",
-                "operationId": "47493ec623e272fc7f05c9e16a28ebc8",
+        "/api/requests": {
+            "get": {
+                "tags": [
+                    "Request"
+                ],
+                "summary": "Получение списка заявок для ответственного лица",
+                "operationId": "3dcfc8974f6b04695df855cc53ef0e42",
                 "parameters": [
                     {
-                        "name": "name",
+                        "name": "status",
                         "in": "query",
-                        "description": "User's name",
-                        "required": true,
+                        "description": "Состояние заявки",
+                        "required": false,
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "active"
                     },
                     {
-                        "name": "email",
+                        "name": "created_at",
                         "in": "query",
-                        "description": "User's email",
-                        "required": true,
+                        "description": "Дата создания",
+                        "required": false,
                         "schema": {
                             "type": "string"
-                        }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "User's password",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
+                        },
+                        "example": "2023-09-15"
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "User registered successfully"
+                    "200": {
+                        "description": "Возвращает список",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        },
+                                        "status": {
+                                            "type": "string",
+                                            "example": "active"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Какой-то текст"
+                                        },
+                                        "answer": {
+                                            "type": "string",
+                                            "example": "Какой-то ответ"
+                                        },
+                                        "email": {
+                                            "type": "string",
+                                            "example": "user@test.com"
+                                        },
+                                        "created": {
+                                            "type": "string",
+                                            "example": "6 minutes ago"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "422": {
-                        "description": "Validation errors"
+                    "403": {
+                        "description": "Доступ запрещен"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Request"
+                ],
+                "summary": "Добавление заявки",
+                "operationId": "b52928f74fc4be3b6808819bb42db29c",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "message": {
+                                                "type": "string",
+                                                "example": "Какой-то текст"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное добавление заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/requests/{request}": {
+            "put": {
+                "tags": [
+                    "Request"
+                ],
+                "summary": "Добавление заявки",
+                "operationId": "c16f52b8ddf9a24e5efdf0d4ea040ccb",
+                "parameters": [
+                    {
+                        "name": "request",
+                        "in": "path",
+                        "description": "ID заявки",
+                        "required": true,
+                        "example": 1
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "oneOf": [
+                                    {
+                                        "properties": {
+                                            "answer": {
+                                                "type": "string",
+                                                "example": "Какой-то текст"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Успешное добавление заявки",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Доступ запрещен"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         }
     },
@@ -87,7 +252,6 @@
         "securitySchemes": {
             "bearerAuth": {
                 "type": "http",
-                "bearerFormat": "JWT",
                 "scheme": "bearer"
             }
         }
