@@ -20,7 +20,7 @@ class RequestResource extends JsonResource
             'message' => $this->message,
             'answer' => $this->answer,
             'email' => $this->user()->first(['id', 'email'])->email,
-            'created_at' => $this->created_at,
+            'created' => $this->created_at->diffForHumans(),
         ];
     }
 }
