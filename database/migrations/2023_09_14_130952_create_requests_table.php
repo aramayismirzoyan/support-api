@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->enum('status', ['active', 'resolved']);
+            $table->enum('status', ['active', 'resolved'])->default('active');
             $table->text('message', 1000);
-            $table->text('answer', 1000);
+            $table->text('answer', 1000)->nullable();
             $table->timestamps();
         });
     }
