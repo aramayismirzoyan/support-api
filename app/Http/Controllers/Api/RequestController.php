@@ -13,11 +13,16 @@ use App\Http\Resources\RequestResource;
 use App\Models\Request as RequestModel;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\Gate;
 
 class RequestController extends Controller
 {
     public function getRequests(GetRequestsRequest $request)
     {
+        if(!Gate::allows('isSupport', Auth::user())) {
+            return response()->json([], 403);
+        }
+
         $query = RequestModel::query();
         $statusFilter = new RequestStatusFilter();
         $dataFilter = new RequestDataFilter();
