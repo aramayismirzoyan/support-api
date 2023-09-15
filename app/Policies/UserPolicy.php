@@ -6,7 +6,7 @@ use App\Models\User;
 
 class UserPolicy
 {
-    public function canAddAnswer(User $user)
+    public function isSupport(User $user)
     {
         return $user->is_support === true;
     }

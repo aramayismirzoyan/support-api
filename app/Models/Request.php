@@ -27,7 +27,7 @@ class Request extends Model
 
     public function addAnswer($answer)
     {
-        if(!Gate::allows('canAddAnswer', Auth::user())) {
+        if(!Gate::allows('isSupport', Auth::user())) {
             throw new Exception('Вы не имеете право добавить ответ');
         }
 
