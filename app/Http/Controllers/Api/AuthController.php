@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Auth;
  *     scheme="bearer"
  * )
  */
-
 class AuthController extends Controller
 {
     private function isAuthorized($email, $password): bool
@@ -71,7 +70,7 @@ class AuthController extends Controller
      */
     public function generateToken(LoginRequest $request): JsonResponse
     {
-        if($this->isAuthorized($request->email, $request->password)) {
+        if ($this->isAuthorized($request->email, $request->password)) {
             $token = User::getToken($request->email);
 
             return response()

@@ -20,7 +20,7 @@ class SendAnswerByEmail
     /**
      * Handle the event.
      */
-    public function handle(RequestAnswered $event, ): void
+    public function handle(RequestAnswered $event,): void
     {
         $this->mail->send($event->requestModel);
     }

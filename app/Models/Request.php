@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -27,11 +27,11 @@ class Request extends Model
 
     public function addAnswer($answer)
     {
-        if(!Gate::allows('isSupport', Auth::user())) {
+        if (!Gate::allows('isSupport', Auth::user())) {
             throw new Exception('Вы не имеете право добавить ответ');
         }
 
-        if($this->isAnswerResolved()) {
+        if ($this->isAnswerResolved()) {
             throw new Exception('Ответ уже добавлен');
         }
 

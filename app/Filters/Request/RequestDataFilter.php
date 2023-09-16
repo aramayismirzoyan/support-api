@@ -9,12 +9,12 @@ class RequestDataFilter extends RequestFilterChain
 {
     public function query(Builder $query, Request $request)
     {
-        if($request->exists('created_at')) {
+        if ($request->exists('created_at')) {
             $query = $query
-                        ->where(function($query) use ($request){
-                            $query->whereDate('created_at', '=', $request->created_at);
-                            $query->orWhere('created_at', '=', $request->created_at);
-                        });
+                ->where(function ($query) use ($request) {
+                    $query->whereDate('created_at', '=', $request->created_at);
+                    $query->orWhere('created_at', '=', $request->created_at);
+                });
         }
 
         return $this->next($query, $request);

@@ -11,10 +11,10 @@ use App\Http\Requests\Api\GetRequestsRequest;
 use App\Http\Requests\Api\StoreRequestRequest;
 use App\Http\Resources\RequestResource;
 use App\Models\Request as RequestModel;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
-use Exception;
 use Illuminate\Support\Facades\Gate;
 
 class RequestController extends Controller
@@ -82,7 +82,7 @@ class RequestController extends Controller
      */
     public function getRequests(GetRequestsRequest $request): JsonResponse|JsonResource
     {
-        if(!Gate::allows('isSupport', Auth::user())) {
+        if (!Gate::allows('isSupport', Auth::user())) {
             return response()->json([], 403);
         }
 
@@ -92,9 +92,9 @@ class RequestController extends Controller
 
         $statusFilter->addFilter($dataFilter);
         $requests = $statusFilter->query($query, $request)
-            ->get([
-                'id', 'status', 'message', 'answer', 'user_id', 'created_at',
-            ]);
+                        ->get([
+                            'id', 'status', 'message', 'answer', 'user_id', 'created_at',
+                        ]);
 
         return RequestResource::collection($requests);
     }
