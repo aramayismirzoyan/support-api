@@ -13,7 +13,7 @@ class RequestAnswered extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $mailData;
+    public string $mailData;
 
     /**
      * Create a new message instance.
