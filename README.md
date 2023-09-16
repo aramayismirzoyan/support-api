@@ -21,7 +21,9 @@
 ./vendor/bin/sail artisan db:seed
 ~~~
 
-5. Запустить контейнеры
+5. Копировать `.env.example` под именем `.env`
+
+6. Запустить контейнеры
 
 ~~~
 ./vendor/bin/sail up
