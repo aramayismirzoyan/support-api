@@ -34,7 +34,7 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *     path="/api/auth",
-     *     summary="Генерация токена для аутентификации для пользователя",
+     *     summary="Генерация токена для аутентификации пользователя",
      *     tags={"Auth"},
      *      @OA\RequestBody(
      *          @OA\JsonContent(
