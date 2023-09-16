@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\LoginRequest;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -20,7 +22,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    private function isAuthorized($email, $password)
+    private function isAuthorized($email, $password): bool
     {
         $authData = [
             'email' => $email,
@@ -67,12 +69,10 @@ class AuthController extends Controller
      *     @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
-    public function generateToken(LoginRequest $request)
+    public function generateToken(LoginRequest $request): JsonResponse
     {
         if($this->isAuthorized($request->email, $request->password)) {
-            $token = Auth::user()
-                ->createToken($request->email)
-                ->plainTextToken;
+            $token = User::getToken($request->email);
 
             return response()
                 ->json(compact('token'));

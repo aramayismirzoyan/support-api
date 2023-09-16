@@ -11,6 +11,8 @@ use App\Http\Requests\Api\GetRequestsRequest;
 use App\Http\Requests\Api\StoreRequestRequest;
 use App\Http\Resources\RequestResource;
 use App\Models\Request as RequestModel;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use Illuminate\Support\Facades\Gate;
@@ -78,7 +80,7 @@ class RequestController extends Controller
      *     @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
-    public function getRequests(GetRequestsRequest $request)
+    public function getRequests(GetRequestsRequest $request): JsonResponse|JsonResource
     {
         if(!Gate::allows('isSupport', Auth::user())) {
             return response()->json([], 403);
@@ -129,7 +131,7 @@ class RequestController extends Controller
      *      )
      * )
      */
-    public function store(StoreRequestRequest $request)
+    public function store(StoreRequestRequest $request): JsonResponse
     {
         Auth::user()
             ->requests()
@@ -181,7 +183,7 @@ class RequestController extends Controller
      *      @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
-    public function addAnswer(RequestModel $request, AddAnswerRequest $requestInput)
+    public function addAnswer(RequestModel $request, AddAnswerRequest $requestInput): JsonResponse
     {
         try {
             $request->addAnswer($requestInput->answer);
