@@ -140,6 +140,25 @@ class RequestTest extends TestCase
         $response->assertStatus(403);
     }
 
+    public function test_support_user_cannt_add_answer_second_time(): void
+    {
+        $token = $this->getAuthToken(['is_support' => true]);
+
+        $request = createRequest([
+            'status' => 'resolved',
+            'answer' => 'Some text for answer',
+        ]);
+
+        $response = $this->withHeaders([
+            'Accept', 'application/json',
+            'Authorization', $token,
+        ])->json('put', '/api/requests/' . $request->id, [
+            'answer' => 'Some text for answer',
+        ]);
+
+        $response->assertStatus(403);
+    }
+
     public function test_can_support_user_add_answer(): void
     {
         $token = $this->getAuthToken(['is_support' => true]);
