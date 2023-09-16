@@ -6,7 +6,7 @@ use App\Models\User;
 
 trait UserAuth
 {
-    public function getAuthToken($userData = [])
+    public function getAuthToken($userData = []): string
     {
         $user = createTestUser($userData);
 

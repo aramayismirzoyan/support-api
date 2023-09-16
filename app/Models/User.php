@@ -52,7 +52,7 @@ class User extends Authenticatable
         return $this->hasMany(Request::class);
     }
 
-    public static function getToken($email)
+    public static function getToken($email): string
     {
         return Auth::user()
                 ->createToken($email)

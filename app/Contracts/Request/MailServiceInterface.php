@@ -6,5 +6,5 @@ use App\Models\Request;
 
 interface MailServiceInterface
 {
-    public function send(Request $request);
+    public function send(Request $request): void;
 }

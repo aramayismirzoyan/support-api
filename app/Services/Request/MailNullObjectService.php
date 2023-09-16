@@ -7,7 +7,7 @@ use App\Models\Request;
 
 class MailNullObjectService implements MailServiceInterface
 {
-    public function send(Request $request)
+    public function send(Request $request): void
     {
         //
     }

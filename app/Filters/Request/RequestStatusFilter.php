@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RequestStatusFilter extends RequestFilterChain
 {
-    public function query(Builder $query, Request $request)
+    public function query(Builder $query, Request $request): Builder
     {
         if($request->exists('status')) {
             $query = $query->where('status', $request->status);

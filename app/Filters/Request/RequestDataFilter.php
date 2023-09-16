@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class RequestDataFilter extends RequestFilterChain
 {
-    public function query(Builder $query, Request $request)
+    public function query(Builder $query, Request $request): Builder
     {
         if ($request->exists('created_at')) {
             $query = $query

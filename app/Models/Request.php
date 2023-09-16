@@ -20,12 +20,12 @@ class Request extends Model
         'message',
     ];
 
-    private function isAnswerResolved()
+    private function isAnswerResolved(): bool
     {
         return $this->status === self::RESOLVED;
     }
 
-    public function addAnswer($answer)
+    public function addAnswer($answer): void
     {
         if (!Gate::allows('isSupport', Auth::user())) {
             throw new Exception('Вы не имеете право добавить ответ');
