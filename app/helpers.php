@@ -17,4 +17,3 @@ if (!function_exists('createRequest')) {
         return Request::factory()->for(Auth::user())->create($data);
     }
 }
-

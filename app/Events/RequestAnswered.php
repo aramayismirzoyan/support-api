@@ -20,8 +20,7 @@ class RequestAnswered
      */
     public function __construct(
         public Request $requestModel,
-    )
-    {
+    ) {
         //
     }
 

@@ -12,8 +12,7 @@ class SendAnswerByEmail
      */
     public function __construct(
         private MailServiceInterface $mail,
-    )
-    {
+    ) {
         //
     }
 
