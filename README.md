@@ -9,19 +9,19 @@
 ./vendor/bin/sail composer update
 ~~~
 
-3. Мигрировать базу
+3. Копировать `.env.example` под именем `.env`
+
+4. Мигрировать базу
 
 ~~~
 ./vendor/bin/sail artisan migrate
 ~~~
 
-4. Запустить seeder
+5. Запустить seeder
 
 ~~~
 ./vendor/bin/sail artisan db:seed
 ~~~
-
-5. Копировать `.env.example` под именем `.env`
 
 6. Запустить контейнеры
 
