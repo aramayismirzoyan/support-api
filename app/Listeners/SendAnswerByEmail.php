@@ -11,7 +11,7 @@ class SendAnswerByEmail
      * Create the event listener.
      */
     public function __construct(
-        private MailServiceInterface $mail,
+        private MailServiceInterface $mail
     ) {
         //
     }
