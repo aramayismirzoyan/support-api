@@ -4,6 +4,9 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class AddAnswerRequest extends FormRequest
 {
@@ -12,7 +15,12 @@ class AddAnswerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::check();
+        return Gate::allows('isSupport', Auth::user());
+    }
+
+    protected function failedAuthorization()
+    {
+        throwForbiddenResponseException('Вы не имеете право добавить ответ');
     }
 
     /**
