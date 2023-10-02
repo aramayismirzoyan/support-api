@@ -20,26 +20,6 @@ class Request extends Model
         'message',
     ];
 
-    private function isAnswerResolved(): bool
-    {
-        return $this->status === self::RESOLVED;
-    }
-
-    public function addAnswer($answer): void
-    {
-        if (!Gate::allows('isSupport', Auth::user())) {
-            throw new Exception('Вы не имеете право добавить ответ');
-        }
-
-        if ($this->isAnswerResolved()) {
-            throw new Exception('Ответ уже добавлен');
-        }
-
-        $this->status = self::RESOLVED;
-        $this->answer = $answer;
-        $this->save();
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
