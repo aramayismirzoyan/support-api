@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\RequestAnswered;
-use App\Filters\Request\RequestDataFilter;
-use App\Filters\Request\RequestStatusFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AddAnswerRequest;
 use App\Http\Requests\Api\GetRequestsRequest;
 use App\Http\Requests\Api\StoreRequestRequest;
 use App\Http\Resources\RequestResource;
 use App\Models\Request as RequestModel;
-use Exception;
+use App\Services\Request\RequestService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +17,11 @@ use Illuminate\Support\Facades\Gate;
 
 class RequestController extends Controller
 {
+    public function __construct(
+        private RequestService $requestService
+    ) {
+    }
+
     /**
      * @OA\Get(
      *     path="/api/requests",
@@ -86,15 +89,7 @@ class RequestController extends Controller
             return response()->json([], 403);
         }
 
-        $query = RequestModel::query();
-        $statusFilter = new RequestStatusFilter();
-        $dataFilter = new RequestDataFilter();
-
-        $statusFilter->addFilter($dataFilter);
-        $requests = $statusFilter->query($query, $request)
-                        ->get([
-                            'id', 'status', 'message', 'answer', 'user_id', 'created_at',
-                        ]);
+        $requests = $this->requestService->getFiltered($request);
 
         return RequestResource::collection($requests);
     }
@@ -133,14 +128,9 @@ class RequestController extends Controller
      */
     public function store(StoreRequestRequest $request): JsonResponse
     {
-        Auth::user()
-            ->requests()
-            ->create([
-                'message' => $request->message
-            ]);
+        $this->requestService->create($request->message);
 
-        return response()
-            ->json(['success' => true]);
+        return createSuccessResponse();
     }
 
     /**
@@ -183,20 +173,16 @@ class RequestController extends Controller
      *      @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
-    public function addAnswer(RequestModel $request, AddAnswerRequest $requestInput): JsonResponse
+    public function addAnswer(RequestModel $request, AddAnswerRequest $requestInput)
     {
-        try {
-            $request->addAnswer($requestInput->answer);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false
-            ], 403);
+        if (Gate::allows('isAnswerResolved', $request)) {
+            return createForbiddenResponse('Ответ уже добавлен');
         }
+
+        $this->requestService->addAnswer($requestInput->answer, $request);
 
         RequestAnswered::dispatch($request);
 
-        return response()->json([
-            'success' => true
-        ]);
+        return createSuccessResponse();
     }
 }
