@@ -83,7 +83,8 @@ class RequestController extends Controller
      *     @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
-    public function getRequests(GetRequestsRequest $request): JsonResponse|JsonResource {
+    public function getRequests(GetRequestsRequest $request): JsonResponse|JsonResource
+    {
         if (!Gate::allows('isSupport', Auth::user())) {
             return response()->json([], 403);
         }
