@@ -10,7 +10,7 @@ class RequestStatusFilter extends RequestFilterChain
     public function query(Builder $query, Request $request): Builder
     {
         if ($request->exists('status')) {
-            $query = $query->where('status', $request->status);
+            $query = $query->ofStatus($request->status);
         }
 
         return $this->next($query, $request);
