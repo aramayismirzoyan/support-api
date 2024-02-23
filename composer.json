@@ -49,9 +49,6 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "pint": [
-            "pint --test -v --preset per"
         ]
     },
     "extra": {
