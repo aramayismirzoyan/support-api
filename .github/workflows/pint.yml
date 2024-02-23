@@ -15,5 +15,6 @@ jobs:
           preset: per
           verboseMode: true
           testMode: true
+          configPath: "./pint.json"
           pintVersion: 1.8.0
           onlyDirty: true
