@@ -12,6 +12,6 @@ trait UserAuth
 
         $this->actingAs($user);
 
-        return 'Bearer ' . User::getToken($user->email);
+        return 'Bearer '.User::getToken($user->email);
     }
 }

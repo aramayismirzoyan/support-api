@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
  *    title="Support API",
  *    version="1.0.0",
  * )
+ *
  * @OA\SecurityScheme(
  *     type="http",
  *     securityScheme="bearerAuth",
@@ -25,7 +26,7 @@ class AuthController extends Controller
     {
         $authData = [
             'email' => $email,
-            'password' => $password
+            'password' => $password,
         ];
 
         return Auth::attempt($authData);
@@ -36,10 +37,14 @@ class AuthController extends Controller
      *     path="/api/auth",
      *     summary="Генерация токена для аутентификации пользователя",
      *     tags={"Auth"},
+     *
      *      @OA\RequestBody(
+     *
      *          @OA\JsonContent(
      *             oneOf={
+     *
      *                  @OA\Schema(
+     *
      *                      @OA\Property(
      *                          property="email",
      *                          type="string",
@@ -54,10 +59,13 @@ class AuthController extends Controller
      *             },
      *         )
      *     ),
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Успешная аутентификация",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="token",
      *                  type="string",
@@ -65,6 +73,7 @@ class AuthController extends Controller
      *               ),
      *          )
      *      ),
+     *
      *     @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
@@ -79,7 +88,7 @@ class AuthController extends Controller
 
         return response()
             ->json([
-                'auth' => false
+                'auth' => false,
             ], 403);
     }
 }

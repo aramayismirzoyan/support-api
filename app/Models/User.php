@@ -55,7 +55,7 @@ class User extends Authenticatable
     public static function getToken($email): string
     {
         return Auth::user()
-                ->createToken($email)
+            ->createToken($email)
                 ->plainTextToken;
     }
 }

@@ -14,7 +14,7 @@ class MailService implements MailServiceInterface
         Mail::to($request->user->email)
             ->send(new RequestAnswered([
                 'title' => 'Ответ на вашу заявку',
-                'body' => $request->answer
+                'body' => $request->answer,
             ]));
     }
 }

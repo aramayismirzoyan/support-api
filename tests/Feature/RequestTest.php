@@ -52,7 +52,7 @@ class RequestTest extends TestCase
             'Accept', 'application/json',
             'Authorization', $token,
         ])->json('get', '/api/requests', [
-            'status' => 'active'
+            'status' => 'active',
         ]);
 
         $response->assertJsonCount(2);
@@ -73,7 +73,7 @@ class RequestTest extends TestCase
             'Accept', 'application/json',
             'Authorization', $token,
         ])->json('get', '/api/requests', [
-            'created_at' => $now
+            'created_at' => $now,
         ]);
 
         $response->assertJsonCount(1);
@@ -88,11 +88,11 @@ class RequestTest extends TestCase
 
         createRequest([
             'status' => 'active',
-            'created_at' => $now
+            'created_at' => $now,
         ]);
         createRequest([
             'status' => 'resolved',
-            'created_at' => $now
+            'created_at' => $now,
         ]);
 
         $response = $this->withHeaders([
@@ -100,7 +100,7 @@ class RequestTest extends TestCase
             'Authorization', $token,
         ])->json('get', '/api/requests', [
             'status' => 'active',
-            'created_at' => $now
+            'created_at' => $now,
         ]);
 
         $response->assertJsonCount(1);
@@ -133,7 +133,7 @@ class RequestTest extends TestCase
         $response = $this->withHeaders([
             'Accept', 'application/json',
             'Authorization', $token,
-        ])->json('put', '/api/requests/' . $request->id, [
+        ])->json('put', '/api/requests/'.$request->id, [
             'answer' => 'Some text for answer',
         ]);
 
@@ -152,7 +152,7 @@ class RequestTest extends TestCase
         $response = $this->withHeaders([
             'Accept', 'application/json',
             'Authorization', $token,
-        ])->json('put', '/api/requests/' . $request->id, [
+        ])->json('put', '/api/requests/'.$request->id, [
             'answer' => 'Some text for answer',
         ]);
 
@@ -168,7 +168,7 @@ class RequestTest extends TestCase
         $response = $this->withHeaders([
             'Accept', 'application/json',
             'Authorization', $token,
-        ])->json('put', '/api/requests/' . $request->id, [
+        ])->json('put', '/api/requests/'.$request->id, [
             'answer' => 'Some text for answer',
         ]);
 

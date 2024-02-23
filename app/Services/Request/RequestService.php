@@ -28,7 +28,7 @@ class RequestService
         Auth::user()
             ->requests()
             ->create([
-                'message' => $message
+                'message' => $message,
             ]);
     }
 

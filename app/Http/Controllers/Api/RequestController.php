@@ -28,26 +28,33 @@ class RequestController extends Controller
      *     summary="Получение списка заявок для ответственного лица",
      *     tags={"Request"},
      *     security={{ "bearerAuth": {} }},
+     *
      *      @OA\Parameter(
      *         name="status",
      *         in="query",
      *         description="Состояние заявки",
      *         required=false,
      *         example="active",
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Parameter(
      *         name="created_at",
      *         in="query",
      *         description="Дата создания",
      *         required=false,
      *         example="2023-09-15",
+     *
      *         @OA\Schema(type="string")
      *     ),
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Возвращает список",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="id",
      *                  type="integer",
@@ -80,12 +87,13 @@ class RequestController extends Controller
      *               ),
      *          )
      *      ),
+     *
      *     @OA\Response(response="403", description="Доступ запрещен")
      * )
      */
     public function getRequests(GetRequestsRequest $request): JsonResponse|JsonResource
     {
-        if (!Gate::allows('isSupport', Auth::user())) {
+        if (! Gate::allows('isSupport', Auth::user())) {
             return response()->json([], 403);
         }
 
@@ -100,10 +108,14 @@ class RequestController extends Controller
      *     summary="Добавление заявки",
      *     tags={"Request"},
      *     security={{ "bearerAuth": {} }},
+     *
      *     @OA\RequestBody(
+     *
      *          @OA\JsonContent(
      *             oneOf={
+     *
      *                  @OA\Schema(
+     *
      *                      @OA\Property(
      *                          property="message",
      *                          type="string",
@@ -113,10 +125,13 @@ class RequestController extends Controller
      *             },
      *         )
      *     ),
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Успешное добавление заявки",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="success",
      *                  type="boolean",
@@ -139,6 +154,7 @@ class RequestController extends Controller
      *     summary="Добавление заявки",
      *     tags={"Request"},
      *     security={{ "bearerAuth": {} }},
+     *
      *      @OA\Parameter(
      *         in="path",
      *         description="ID заявки",
@@ -146,10 +162,14 @@ class RequestController extends Controller
      *         required=true,
      *         example=1
      *     ),
+     *
      *     @OA\RequestBody(
+     *
      *          @OA\JsonContent(
      *             oneOf={
+     *
      *                  @OA\Schema(
+     *
      *                      @OA\Property(
      *                          property="answer",
      *                          type="string",
@@ -159,10 +179,13 @@ class RequestController extends Controller
      *             },
      *         )
      *     ),
+     *
      *     @OA\Response(
      *          response="200",
      *          description="Успешное добавление заявки",
+     *
      *          @OA\JsonContent(
+     *
      *              @OA\Property(
      *                  property="success",
      *                  type="boolean",
@@ -170,6 +193,7 @@ class RequestController extends Controller
      *               ),
      *          )
      *      ),
+     *
      *      @OA\Response(response="403", description="Доступ запрещен")
      * )
      */

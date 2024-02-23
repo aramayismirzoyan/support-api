@@ -12,7 +12,7 @@ class AuthTest extends TestCase
     public function test_can_user_auth(): void
     {
         $user = createTestUser([
-            'password' => 'test'
+            'password' => 'test',
         ]);
 
         $response = $this->json('post', '/api/auth', [
