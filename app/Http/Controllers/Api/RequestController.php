@@ -19,8 +19,7 @@ class RequestController extends Controller
 {
     public function __construct(
         private RequestService $requestService
-    ) {
-    }
+    ) {}
 
     /**
      * @OA\Get(

@@ -133,7 +133,7 @@ class RequestTest extends TestCase
         $response = $this->withHeaders([
             'Accept', 'application/json',
             'Authorization', $token,
-        ])->json('put', '/api/requests/'.$request->id, [
+        ])->json('put', '/api/requests/' . $request->id, [
             'answer' => 'Some text for answer',
         ]);
 
@@ -152,7 +152,7 @@ class RequestTest extends TestCase
         $response = $this->withHeaders([
             'Accept', 'application/json',
             'Authorization', $token,
-        ])->json('put', '/api/requests/'.$request->id, [
+        ])->json('put', '/api/requests/' . $request->id, [
             'answer' => 'Some text for answer',
         ]);
 
@@ -168,7 +168,7 @@ class RequestTest extends TestCase
         $response = $this->withHeaders([
             'Accept', 'application/json',
             'Authorization', $token,
-        ])->json('put', '/api/requests/'.$request->id, [
+        ])->json('put', '/api/requests/' . $request->id, [
             'answer' => 'Some text for answer',
         ]);
 
