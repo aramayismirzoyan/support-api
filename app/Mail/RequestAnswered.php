@@ -21,6 +21,7 @@ class RequestAnswered extends Mailable
     public function __construct($mailData)
     {
         $this->mailData = $mailData;
+        echo 1111;
     }
 
     /**
