@@ -11,7 +11,10 @@ class RequestDataFilter extends RequestFilterChain
     {
         if ($request->exists('created_at')) {
             $query = $query
-                ->ofData($request->created_at);
+                ->where(function ($query) use ($request) {
+                    $query->whereDate('created_at', '=', $request->created_at);
+                    $query->orWhere('created_at', '=', $request->created_at);
+                });
         }
 
         return $this->next($query, $request);

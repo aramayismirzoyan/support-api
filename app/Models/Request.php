@@ -23,17 +23,4 @@ class Request extends Model
     {
         return $this->belongsTo(User::class);
     }
-
-    public function scopeOfStatus(Builder $query, string $status): void
-    {
-        $query->where('status', $status);
-    }
-
-    public function scopeOfData(Builder $query, string $createdAt): void
-    {
-        $query->where(function ($query) use ($createdAt) {
-            $query->whereDate('created_at', '=', $createdAt);
-            $query->orWhere('created_at', '=', $createdAt);
-        });
-    }
 }
