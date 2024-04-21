@@ -44,7 +44,7 @@ Link to Swagger based API documentation `/api/documentation`
 
 ### Simple user
 
-Email- user@test.com <br>
+Email - user@test.com <br>
 Password - user
 
 ### Responsible person
