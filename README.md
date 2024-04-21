@@ -1,51 +1,53 @@
-# Проект Support API
+# Support API
 
-## Установка
+#### API for customer interaction with support service
 
-1. Клонировать проект на локальный компьютер
+## Installation
 
-2. Установить все зависимости
+1. Clone a project to your local computer
+
+2. Install all dependencies
 
 ~~~
 ./vendor/bin/sail composer update
 ~~~
 
-3. Копировать `.env.example` под именем `.env`
+3. Clone `.env.example` as `.env`
 
-4. Запустить контейнеры
+4. Launch containers
 
 ~~~
 ./vendor/bin/sail up
 ~~~
 
-5. Мигрировать базу
+5. Launch migrations
 
 ~~~
 ./vendor/bin/sail artisan migrate
 ~~~
 
-6. Запустить seeder
+6. Launch seeders
 
 ~~~
 ./vendor/bin/sail artisan db:seed
 ~~~
 
-### Запуск тестов
+### Launch tests
 
 ~~~
 ./vendor/bin/sail artisan test
 ~~~
 
-Ссылка на документацию API на основе Swagger `/api/documentation`
+Link to Swagger based API documentation `/api/documentation`
 
-## Тестовые данные пользователей
+## User test data for login
 
-### Обычный пользователь
+### Simple user
 
-Почта- user@test.com <br>
-Пароль - user
+Email- user@test.com <br>
+Password - user
 
-### Ответственное лицо
+### Responsible person
 
-Почта - support@test.com <br>
-Пароль - support
+Email - support@test.com <br>
+Password - support
