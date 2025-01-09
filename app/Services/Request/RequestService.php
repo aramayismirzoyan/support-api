@@ -2,24 +2,34 @@
 
 namespace App\Services\Request;
 
-use App\Filters\Request\RequestFilterFactory;
+use App\Filters\Request\Data;
+use App\Filters\Request\Status;
+use App\Http\Requests\Api\GetRequestsRequest;
 use App\Models\Request as RequestModel;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Pipeline;
 
 class RequestService
 {
-    public function getFiltered(Request $request): Collection
+    public function getFiltered(GetRequestsRequest $request): Collection
     {
         $requestModel = RequestModel::query();
-        $filter = RequestFilterFactory::make();
 
         $fields = ['id', 'status', 'message', 'answer', 'user_id', 'created_at'];
 
-        return $filter
-            ->query($requestModel, $request)
+        $validated = $request->validated();
+
+        return Pipeline::send($requestModel)
+            ->through([
+               new Data($validated),
+               new Status($validated),
+            ])
+            ->thenReturn()
             ->select($fields)
+            ->with('user', function ($query) {
+                $query->select(['id', 'email']);
+            })
             ->get();
     }
 
