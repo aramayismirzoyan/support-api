@@ -96,7 +96,7 @@ class RequestController extends Controller
             return response()->json([], 403);
         }
 
-        $requests = $this->requestService->getFiltered($request);
+//        $requests = $this->requestService->getFiltered($request);
 
         return RequestResource::collection($requests);
     }
